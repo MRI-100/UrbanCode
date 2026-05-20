@@ -8,6 +8,7 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import heroImage from "../assets/hero.png";
 
@@ -69,6 +70,17 @@ const process = [
 ];
 
 export default function About() {
+  const handleProcessClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+
+    document.getElementById("process")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+
+    window.history.replaceState(null, "", "#process");
+  };
+
   return (
     <div className="overflow-hidden bg-black text-white">
 
@@ -112,17 +124,18 @@ export default function About() {
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <a
-                href="https://wa.me/91XXXXXXXXXX"
+              <Link
+                to="/contact"
                 className="group inline-flex items-center justify-center gap-3 rounded-full bg-cyan-500 px-8 py-4 text-sm font-bold text-black shadow-[0_0_30px_rgba(34,211,238,0.25)] transition duration-300 hover:bg-cyan-400 hover:shadow-[0_0_44px_rgba(34,211,238,0.35)] focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:ring-offset-4 focus:ring-offset-black"
               >
                 <MessageCircle className="h-5 w-5" />
                 Start a Project
                 <ArrowUpRight className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
+              </Link>
 
               <a
                 href="#process"
+                onClick={handleProcessClick}
                 className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-600 bg-slate-900/50 px-8 py-4 text-sm font-semibold text-slate-100 backdrop-blur-sm transition duration-300 hover:border-cyan-400/60 hover:bg-slate-800/70 hover:text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:ring-offset-4 focus:ring-offset-black"
               >
                 See Our Process
@@ -279,7 +292,7 @@ export default function About() {
       </section>
 
       {/* PROCESS SECTION */}
-      <section id="process" className="px-6 py-24">
+      <section id="process" className="scroll-mt-28 px-6 py-24">
 
         <div className="mx-auto max-w-7xl">
 

@@ -13,6 +13,15 @@ import {
   MessageCircle,
   Phone,
 } from "lucide-react";
+import { Link } from "react-router-dom";
+import type { MouseEvent } from "react";
+
+const phoneNumber = "917896179330";
+const whatsappMessage = encodeURIComponent(
+  "Hi UrbanCode, I would like to discuss a service."
+);
+const whatsappUrl = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
+const phoneUrl = `tel:+${phoneNumber}`;
 
 const services = [
   {
@@ -78,6 +87,19 @@ const services = [
 ];
 
 export default function Services() {
+  const handleExploreServicesClick = (
+    event: MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+
+    document.getElementById("services-list")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+
+    window.history.replaceState(null, "", "#services-list");
+  };
+
   return (
     <div className="bg-black text-white">
 
@@ -130,19 +152,26 @@ export default function Services() {
 
           {/* CTA BUTTONS */}
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="group inline-flex items-center gap-3 rounded-full bg-cyan-500 px-8 py-4 text-black font-semibold shadow-[0_0_30px_rgba(34,211,238,0.25)] transition hover:bg-cyan-400 hover:shadow-[0_0_40px_rgba(34,211,238,0.35)]">
+            <button
+              type="button"
+              onClick={handleExploreServicesClick}
+              className="group inline-flex items-center gap-3 rounded-full bg-cyan-500 px-8 py-4 text-black font-semibold shadow-[0_0_30px_rgba(34,211,238,0.25)] transition hover:bg-cyan-400 hover:shadow-[0_0_40px_rgba(34,211,238,0.35)]"
+            >
               Explore Services
               <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
             </button>
-            <button className="inline-flex items-center gap-3 rounded-full border border-slate-600 bg-slate-900/50 px-8 py-4 text-slate-100 font-semibold backdrop-blur-sm transition hover:border-cyan-400/60 hover:bg-slate-800/70 hover:text-cyan-300">
+            <Link
+              to="/contact#project-brief"
+              className="inline-flex items-center gap-3 rounded-full border border-slate-600 bg-slate-900/50 px-8 py-4 text-slate-100 font-semibold backdrop-blur-sm transition hover:border-cyan-400/60 hover:bg-slate-800/70 hover:text-cyan-300"
+            >
               Schedule Consultation
-            </button>
+            </Link>
           </div>
         </div>
       </section>
 
       {/* SERVICES */}
-      <section className="px-6 py-32 relative">
+      <section id="services-list" className="px-6 py-32 relative scroll-mt-28">
         {/* BACKGROUND ACCENT */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/3 right-0 h-96 w-96 rounded-full bg-cyan-500/8 blur-3xl" />
@@ -343,7 +372,9 @@ export default function Services() {
             {/* CTA BUTTONS */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <a
-                href="https://wa.me/91XXXXXXXXXX"
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
                 className="group inline-flex items-center gap-3 rounded-full bg-linear-to-r from-blue-400 to-cyan-400 px-10 py-5 text-black font-bold shadow-[0_0_30px_rgba(0,240,255,0.3)] hover:shadow-[0_0_50px_rgba(0,240,255,0.5)] hover:scale-105 transition-all duration-300"
               >
                 <MessageCircle className="h-5 w-5" />
@@ -352,7 +383,7 @@ export default function Services() {
               </a>
 
               <a
-                href="tel:+91XXXXXXXXXX"
+                href={phoneUrl}
                 className="group inline-flex items-center gap-3 rounded-full border-2 border-cyan-400/50 bg-transparent px-10 py-5 text-cyan-300 font-bold hover:bg-cyan-400/10 hover:border-cyan-400 hover:scale-105 transition-all duration-300"
               >
                 <Phone className="h-5 w-5" />

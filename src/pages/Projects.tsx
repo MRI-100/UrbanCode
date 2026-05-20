@@ -13,6 +13,15 @@ import {
   Eye,
   MessageCircle,
 } from "lucide-react";
+import { Link } from "react-router-dom";
+import type { MouseEvent } from "react";
+
+const phoneNumber = "917896179330";
+const whatsappMessage = encodeURIComponent(
+  "Hi UrbanCode, I would like to discuss a project."
+);
+const whatsappUrl = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
+const phoneUrl = `tel:+${phoneNumber}`;
 
 const projects = [
   {
@@ -58,6 +67,19 @@ const projects = [
 ];
 
 export default function Projects() {
+  const handleViewPortfolioClick = (
+    event: MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+
+    document.getElementById("portfolio")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+
+    window.history.replaceState(null, "", "#portfolio");
+  };
+
   return (
     <div className="bg-black text-white overflow-hidden">
 
@@ -100,18 +122,25 @@ export default function Projects() {
           </p>
 
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">
-            <button className="group inline-flex items-center justify-center gap-3 rounded-full bg-cyan-500 px-8 py-4 font-semibold text-black shadow-[0_0_30px_rgba(34,211,238,0.25)] transition duration-300 hover:bg-cyan-400 hover:shadow-[0_0_44px_rgba(34,211,238,0.35)] focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:ring-offset-4 focus:ring-offset-black">
+            <button
+              type="button"
+              onClick={handleViewPortfolioClick}
+              className="group inline-flex items-center justify-center gap-3 rounded-full bg-cyan-500 px-8 py-4 font-semibold text-black shadow-[0_0_30px_rgba(34,211,238,0.25)] transition duration-300 hover:bg-cyan-400 hover:shadow-[0_0_44px_rgba(34,211,238,0.35)] focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:ring-offset-4 focus:ring-offset-black"
+            >
               <Eye className="h-5 w-5" />
               View Portfolio
               <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </button>
 
-            <button className="group rounded-full border border-slate-600 bg-slate-900/50 px-8 py-4 text-slate-100 font-semibold transition duration-300 hover:border-cyan-400/60 hover:bg-slate-800/70 hover:text-cyan-300 backdrop-blur-sm">
+            <Link
+              to="/contact#project-brief"
+              className="group rounded-full border border-slate-600 bg-slate-900/50 px-8 py-4 text-slate-100 font-semibold transition duration-300 hover:border-cyan-400/60 hover:bg-slate-800/70 hover:text-cyan-300 backdrop-blur-sm"
+            >
               <span className="flex items-center gap-2">
                 <MessageCircle className="h-5 w-5 text-cyan-400" />
                 Discuss Project
               </span>
-            </button>
+            </Link>
           </div>
 
           <div className="mx-auto mt-12 grid max-w-3xl gap-4 sm:grid-cols-3">
@@ -130,7 +159,7 @@ export default function Projects() {
       </section>
 
       {/* PROJECT GRID */}
-      <section className="relative px-6 pb-32">
+      <section id="portfolio" className="relative scroll-mt-28 px-6 pb-32">
 
         <div className="absolute left-1/2 top-20 h-96 w-[80vw] -translate-x-1/2 rounded-full bg-cyan-500/5 blur-3xl" />
 
@@ -316,7 +345,9 @@ export default function Projects() {
               <div className="mt-8 flex flex-col gap-4">
 
                 <a
-                  href="https://wa.me/91XXXXXXXXXX"
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer"
                   className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-cyan-500 px-7 py-4 text-sm font-bold text-black shadow-[0_0_30px_rgba(34,211,238,0.25)] transition duration-300 hover:bg-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:ring-offset-4 focus:ring-offset-[#111317]"
                 >
                   <MessageCircle className="h-5 w-5" />
@@ -325,7 +356,7 @@ export default function Projects() {
                 </a>
 
                 <a
-                  href="tel:+91XXXXXXXXXX"
+                  href={phoneUrl}
                   className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-cyan-400/40 bg-white/5 px-7 py-4 text-sm font-semibold text-cyan-300 transition duration-300 hover:bg-cyan-400/10 focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:ring-offset-4 focus:ring-offset-[#111317]"
                 >
                   Schedule a Call

@@ -10,6 +10,15 @@ import {
   Send,
   Sparkles,
 } from "lucide-react";
+import { useEffect, type MouseEvent } from "react";
+import { useLocation } from "react-router-dom";
+
+const whatsappPhoneNumber = "917896179330";
+const whatsappMessage = encodeURIComponent(
+  "Hi UrbanCode, I would like to discuss a project."
+);
+const whatsappUrl = `https://wa.me/${whatsappPhoneNumber}?text=${whatsappMessage}`;
+const phoneUrl = `tel:+${whatsappPhoneNumber}`;
 
 const contactMethods = [
   {
@@ -17,15 +26,15 @@ const contactMethods = [
     title: "Chat on WhatsApp",
     description: "Best for fast project discussions",
     value: "Start a quick chat",
-    href: "https://wa.me/91XXXXXXXXXX",
+    href: whatsappUrl,
     accent: "cyan",
   },
   {
     icon: PhoneCall,
     title: "Schedule a Call",
     description: "Talk through scope and timeline",
-    value: "+91 XXXXX XXXXX",
-    href: "tel:+91XXXXXXXXXX",
+    value: "+91 78961 79330",
+    href: phoneUrl,
     accent: "blue",
   },
 ];
@@ -57,6 +66,58 @@ const serviceOptions = [
 ];
 
 export default function Contact() {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) {
+      return;
+    }
+
+    window.setTimeout(() => {
+      document.getElementById(hash.slice(1))?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 0);
+  }, [hash]);
+
+  const handleProjectBriefClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+
+    document.getElementById("project-brief")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+
+    window.history.replaceState(null, "", "#project-brief");
+  };
+
+  const handleProjectBriefSubmit = (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const message = [
+      "Hi UrbanCode, I would like to share a project brief.",
+      "",
+      `Name: ${formData.get("fullName") || ""}`,
+      `Email: ${formData.get("email") || ""}`,
+      `Phone / WhatsApp: ${formData.get("phone") || ""}`,
+      `Service Type: ${formData.get("serviceType") || ""}`,
+      `Budget Range: ${formData.get("budgetRange") || ""}`,
+      `Timeline: ${formData.get("timeline") || ""}`,
+      "",
+      `Project Details: ${formData.get("projectDetails") || ""}`,
+    ].join("\n");
+
+    window.open(
+      `https://wa.me/${whatsappPhoneNumber}?text=${encodeURIComponent(message)}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
+
   return (
     <div className="overflow-hidden bg-black text-white">
 
@@ -101,6 +162,7 @@ export default function Contact() {
           <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               href="#project-brief"
+              onClick={handleProjectBriefClick}
               className="group inline-flex items-center justify-center gap-3 rounded-full bg-cyan-500 px-8 py-4 font-semibold text-black shadow-[0_0_30px_rgba(34,211,238,0.25)] transition duration-300 hover:bg-cyan-400 hover:shadow-[0_0_44px_rgba(34,211,238,0.35)] focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:ring-offset-4 focus:ring-offset-black"
             >
               Send Project Brief
@@ -108,7 +170,9 @@ export default function Contact() {
             </a>
 
             <a
-              href="https://wa.me/91XXXXXXXXXX"
+              href={whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-600 bg-slate-900/50 px-8 py-4 font-semibold text-slate-100 backdrop-blur-sm transition duration-300 hover:border-cyan-400/60 hover:bg-slate-800/70 hover:text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:ring-offset-4 focus:ring-offset-black"
             >
               <MessageCircle className="h-5 w-5" />
@@ -181,22 +245,19 @@ export default function Contact() {
                   <a
                     key={method.title}
                     href={method.href}
-                    className={`group flex items-center justify-between rounded-[24px] border p-5 transition duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:ring-offset-4 focus:ring-offset-black ${
-                      isCyan
-                        ? "border-cyan-400/20 bg-cyan-400/10 hover:border-cyan-300/40 hover:bg-cyan-400/15"
-                        : "border-blue-400/20 bg-blue-400/10 hover:border-blue-300/40 hover:bg-blue-400/15"
-                    }`}
+                    className={`group flex items-center justify-between rounded-[24px] border p-5 transition duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:ring-offset-4 focus:ring-offset-black ${isCyan
+                      ? "border-cyan-400/20 bg-cyan-400/10 hover:border-cyan-300/40 hover:bg-cyan-400/15"
+                      : "border-blue-400/20 bg-blue-400/10 hover:border-blue-300/40 hover:bg-blue-400/15"
+                      }`}
                   >
                     <div className="flex min-w-0 items-center gap-4">
                       <div
-                        className={`flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl ${
-                          isCyan ? "bg-cyan-400/15" : "bg-blue-400/15"
-                        }`}
+                        className={`flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl ${isCyan ? "bg-cyan-400/15" : "bg-blue-400/15"
+                          }`}
                       >
                         <Icon
-                          className={`h-5 w-5 ${
-                            isCyan ? "text-cyan-300" : "text-blue-300"
-                          }`}
+                          className={`h-5 w-5 ${isCyan ? "text-cyan-300" : "text-blue-300"
+                            }`}
                         />
                       </div>
 
@@ -252,7 +313,8 @@ export default function Contact() {
           {/* CONTACT FORM */}
           <form
             id="project-brief"
-            className="relative overflow-hidden rounded-[32px] border border-blue-400/20 bg-[#111317]/90 p-7 shadow-[0_40px_120px_rgba(0,240,255,0.08)] backdrop-blur-xl sm:p-10"
+            onSubmit={handleProjectBriefSubmit}
+            className="relative scroll-mt-28 overflow-hidden rounded-[32px] border border-blue-400/20 bg-[#111317]/90 p-7 shadow-[0_40px_120px_rgba(0,240,255,0.08)] backdrop-blur-xl sm:p-10"
           >
 
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_90%_0%,rgba(34,211,238,0.16),transparent_34%)]" />
@@ -284,8 +346,10 @@ export default function Contact() {
                   </label>
 
                   <input
+                    name="fullName"
                     type="text"
                     placeholder="Your name"
+                    required
                     className="w-full rounded-2xl border border-blue-400/20 bg-black/70 px-5 py-4 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20"
                   />
                 </div>
@@ -296,8 +360,10 @@ export default function Contact() {
                   </label>
 
                   <input
+                    name="email"
                     type="email"
                     placeholder="you@example.com"
+                    required
                     className="w-full rounded-2xl border border-blue-400/20 bg-black/70 px-5 py-4 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20"
                   />
                 </div>
@@ -308,6 +374,7 @@ export default function Contact() {
                   </label>
 
                   <input
+                    name="phone"
                     type="tel"
                     placeholder="+91 XXXXX XXXXX"
                     className="w-full rounded-2xl border border-blue-400/20 bg-black/70 px-5 py-4 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20"
@@ -319,7 +386,10 @@ export default function Contact() {
                     Service Type
                   </label>
 
-                  <select className="w-full rounded-2xl border border-blue-400/20 bg-black/70 px-5 py-4 text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20">
+                  <select
+                    name="serviceType"
+                    className="w-full rounded-2xl border border-blue-400/20 bg-black/70 px-5 py-4 text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20"
+                  >
                     {serviceOptions.map((option) => (
                       <option key={option}>{option}</option>
                     ))}
@@ -331,7 +401,10 @@ export default function Contact() {
                     Budget Range
                   </label>
 
-                  <select className="w-full rounded-2xl border border-blue-400/20 bg-black/70 px-5 py-4 text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20">
+                  <select
+                    name="budgetRange"
+                    className="w-full rounded-2xl border border-blue-400/20 bg-black/70 px-5 py-4 text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20"
+                  >
                     <option>Not sure yet</option>
                     <option>Under Rs. 50,000</option>
                     <option>Rs. 50,000 - Rs. 1,50,000</option>
@@ -345,7 +418,10 @@ export default function Contact() {
                     Timeline
                   </label>
 
-                  <select className="w-full rounded-2xl border border-blue-400/20 bg-black/70 px-5 py-4 text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20">
+                  <select
+                    name="timeline"
+                    className="w-full rounded-2xl border border-blue-400/20 bg-black/70 px-5 py-4 text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20"
+                  >
                     <option>As soon as possible</option>
                     <option>Within 1 month</option>
                     <option>1 - 3 months</option>
@@ -359,8 +435,10 @@ export default function Contact() {
                   </label>
 
                   <textarea
+                    name="projectDetails"
                     rows={6}
                     placeholder="Tell us about your goals, audience, required features, design direction, or space requirements..."
+                    required
                     className="w-full resize-none rounded-2xl border border-blue-400/20 bg-black/70 px-5 py-4 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20"
                   />
                 </div>

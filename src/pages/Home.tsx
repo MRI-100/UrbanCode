@@ -11,6 +11,7 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import heroImage from "../assets/hero.png";
 
@@ -118,21 +119,21 @@ export default function Home() {
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className="group inline-flex items-center justify-center gap-3 rounded-full bg-cyan-500 px-8 py-4 font-semibold text-black shadow-[0_0_30px_rgba(34,211,238,0.25)] transition duration-300 hover:bg-cyan-400 hover:shadow-[0_0_44px_rgba(34,211,238,0.35)] focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:ring-offset-4 focus:ring-offset-black"
               >
                 Start a Project
                 <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
-              </a>
+              </Link>
 
-              <a
-                href="/services"
+              <Link
+                to="/services"
                 className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-600 bg-slate-900/50 px-8 py-4 font-semibold text-slate-100 backdrop-blur-sm transition duration-300 hover:border-cyan-400/60 hover:bg-slate-800/70 hover:text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:ring-offset-4 focus:ring-offset-black"
               >
                 View Services
                 <ArrowUpRight className="h-4 w-4" />
-              </a>
+              </Link>
             </div>
 
             <div className="mt-12 grid gap-4 sm:grid-cols-3">
@@ -369,13 +370,13 @@ export default function Home() {
               )}
             </div>
 
-            <a
-              href="/about"
+            <Link
+              to="/about"
               className="mt-10 inline-flex items-center justify-center gap-3 rounded-full border border-cyan-400/50 bg-cyan-500/10 px-8 py-4 font-semibold text-cyan-300 transition duration-300 hover:border-cyan-400 hover:bg-cyan-500/20"
             >
               Learn About Us
               <ArrowRight className="h-5 w-5" />
-            </a>
+            </Link>
           </div>
 
           <div className="relative overflow-hidden rounded-[32px] border border-blue-400/20 bg-[#111317]/90 shadow-[0_30px_100px_rgba(0,0,0,0.45)]">
