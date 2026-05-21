@@ -111,11 +111,14 @@ export default function Contact() {
       `Project Details: ${formData.get("projectDetails") || ""}`,
     ].join("\n");
 
-    window.open(
-      `https://wa.me/${whatsappPhoneNumber}?text=${encodeURIComponent(message)}`,
-      "_blank",
-      "noopener,noreferrer"
-    );
+    // window.open(
+    //   `https://wa.me/${whatsappPhoneNumber}?text=${encodeURIComponent(message)}`,
+    //   "_blank",
+    //   "noopener,noreferrer"
+    // );
+
+    window.location.href =
+      `https://wa.me/${whatsappPhoneNumber}?text=${encodeURIComponent(message)}`;
   };
 
   return (
