@@ -12,8 +12,16 @@ import {
   Zap,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import type { FormEvent } from "react";
 
 import heroImage from "../assets/hero.png";
+
+const phoneNumber = "917896179330";
+const whatsappMessage = encodeURIComponent(
+  "Hi UrbanCode, I would like to discuss a project."
+);
+const whatsappUrl = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
+const phoneUrl = `tel:+${phoneNumber}`;
 
 const services = [
   {
@@ -77,6 +85,26 @@ const projects = [
 ];
 
 export default function Home() {
+  const handleBriefSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const message = [
+      "Hi UrbanCode, I would like to share a project brief.",
+      "",
+      `Name: ${formData.get("fullName") || ""}`,
+      `Email: ${formData.get("email") || ""}`,
+      "",
+      `Project Details: ${formData.get("projectDetails") || ""}`,
+    ].join("\n");
+
+    window.open(
+      `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
+
   return (
     <div className="overflow-hidden bg-black text-white">
 
@@ -426,7 +454,9 @@ export default function Home() {
 
               <div className="mt-10 grid gap-4 sm:grid-cols-2">
                 <a
-                  href="https://wa.me/91XXXXXXXXXX"
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer"
                   className="group flex items-center justify-center gap-3 rounded-full bg-cyan-500 px-7 py-4 font-semibold text-black shadow-[0_0_30px_rgba(34,211,238,0.25)] transition duration-300 hover:bg-cyan-400"
                 >
                   <MessageCircle className="h-5 w-5" />
@@ -435,7 +465,7 @@ export default function Home() {
                 </a>
 
                 <a
-                  href="tel:+91XXXXXXXXXX"
+                  href={phoneUrl}
                   className="flex items-center justify-center gap-3 rounded-full border border-cyan-400/40 bg-white/5 px-7 py-4 font-semibold text-cyan-300 transition duration-300 hover:bg-cyan-400/10"
                 >
                   <PhoneCall className="h-5 w-5" />
@@ -445,7 +475,10 @@ export default function Home() {
             </div>
           </div>
 
-          <form className="rounded-[32px] border border-blue-400/20 bg-[#111317]/90 p-7 shadow-[0_40px_120px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-10">
+          <form
+            onSubmit={handleBriefSubmit}
+            className="rounded-[32px] border border-blue-400/20 bg-[#111317]/90 p-7 shadow-[0_40px_120px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-10"
+          >
             <div>
               <p className="text-xs uppercase tracking-[0.35em] text-cyan-300">
                 Contact form
@@ -462,19 +495,25 @@ export default function Home() {
             <div className="mt-8 grid gap-5">
               <input
                 type="text"
+                name="fullName"
                 placeholder="Your name"
+                required
                 className="w-full rounded-2xl border border-blue-400/20 bg-black/70 px-5 py-4 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20"
               />
 
               <input
                 type="email"
+                name="email"
                 placeholder="Your email"
+                required
                 className="w-full rounded-2xl border border-blue-400/20 bg-black/70 px-5 py-4 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20"
               />
 
               <textarea
+                name="projectDetails"
                 placeholder="Tell us about your project"
                 rows={5}
+                required
                 className="w-full resize-none rounded-2xl border border-blue-400/20 bg-black/70 px-5 py-4 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20"
               />
 

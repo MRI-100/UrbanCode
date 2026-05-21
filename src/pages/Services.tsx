@@ -104,7 +104,7 @@ export default function Services() {
     <div className="bg-black text-white">
 
       {/* HERO */}
-      <section className="relative overflow-hidden px-6 py-40 sm:py-52">
+      <section className="relative overflow-hidden px-6 py-28 lg:py-36">
         {/* ANIMATED BACKGROUNDS */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-10 h-80 w-80 rounded-full bg-blue-500/15 blur-3xl animate-pulse" />

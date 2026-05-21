@@ -12,6 +12,13 @@ import { Link } from "react-router-dom";
 
 import heroImage from "../assets/hero.png";
 
+const phoneNumber = "917896179330";
+const whatsappMessage = encodeURIComponent(
+  "Hi UrbanCode, I would like to discuss a project."
+);
+const whatsappUrl = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
+const phoneUrl = `tel:+${phoneNumber}`;
+
 const values = [
   {
     icon: Sparkles,
@@ -85,7 +92,7 @@ export default function About() {
     <div className="overflow-hidden bg-black text-white">
 
       {/* HERO SECTION */}
-      <section className="relative px-6 py-28 lg:py-32">
+      <section className="relative px-6 py-28 lg:py-36">
 
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -left-20 top-0 h-80 w-80 rounded-full bg-blue-500/10 blur-3xl" />
@@ -378,7 +385,9 @@ export default function About() {
 
               <div className="mt-8 flex flex-col gap-4">
                 <a
-                  href="https://wa.me/91XXXXXXXXXX"
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer"
                   className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-cyan-500 px-7 py-4 text-sm font-bold text-black shadow-[0_0_30px_rgba(34,211,238,0.25)] transition duration-300 hover:bg-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:ring-offset-4 focus:ring-offset-[#111317]"
                 >
                   <MessageCircle className="h-5 w-5" />
@@ -387,7 +396,7 @@ export default function About() {
                 </a>
 
                 <a
-                  href="tel:+91XXXXXXXXXX"
+                  href={phoneUrl}
                   className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-cyan-400/40 bg-white/5 px-7 py-4 text-sm font-semibold text-cyan-300 transition duration-300 hover:bg-cyan-400/10 focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:ring-offset-4 focus:ring-offset-[#111317]"
                 >
                   Schedule a Call
